@@ -1,5 +1,7 @@
 package com.projectmanager.models;
 
+import java.util.Date;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -17,6 +19,7 @@ public class Project {
 	@NotBlank
 	@Column
 	String name;
+	@NotBlank
 	@Column
 	String date;
 	@NotBlank

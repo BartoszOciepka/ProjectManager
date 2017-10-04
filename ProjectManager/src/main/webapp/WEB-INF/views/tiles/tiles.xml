@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE tiles-definitions PUBLIC  "-//Apache Software Foundation//DTD Tiles Configuration 3.0//EN"  "http://tiles.apache.org/dtds/tiles-config_3_0.dtd">
+
+<tiles-definitions>
+
+	<!-- Base Definition -->
+	<definition name="base-definition"
+		template="/WEB-INF/views/tiles/layouts/defaultLayout.jsp">
+		<put-attribute name="title" value="" />
+		<put-attribute name="header"
+			value="/WEB-INF/views/tiles/template/defaultHeader.jsp" />
+		<put-attribute name="menu"
+			value="/WEB-INF/views/tiles/template/defaultMenu.jsp" />
+		<put-attribute name="body" value="" />
+		<put-attribute name="footer"
+			value="/WEB-INF/views/tiles/template/defaultFooter.jsp" />
+	</definition>
+
+	<!-- All Employees Page -->
+	<definition name="allEmployees" extends="base-definition">
+		<put-attribute name="title" value="All employees" />
+		<put-attribute name="body" value="/WEB-INF/views/pages/listemployees.jsp" />
+	</definition>
+
+	<!-- All Projects Page -->
+	<definition name="allProjects" extends="base-definition">
+		<put-attribute name="title" value="All projects" />
+		<put-attribute name="body" value="/WEB-INF/views/pages/listprojects.jsp" />
+	</definition>
+
+	<!-- Edit Employee Page -->
+	<definition name="editEmployee" extends="base-definition">
+		<put-attribute name="title" value="Editing employee" />
+		<put-attribute name="body" value="/WEB-INF/views/pages/addeditemployee.jsp" />
+	</definition>
+	
+		<!-- Add Employee Page -->
+	<definition name="addEmployee" extends="base-definition">
+		<put-attribute name="title" value="Adding employee" />
+		<put-attribute name="body" value="/WEB-INF/views/pages/addeditemployee.jsp" />
+	</definition>
+	
+		<!-- Edit Project Page -->
+	<definition name="editProject" extends="base-definition">
+		<put-attribute name="title" value="Editing Project" />
+		<put-attribute name="body" value="/WEB-INF/views/pages/addeditproject.jsp" />
+	</definition>
+	
+			<!-- Add Project Page -->
+	<definition name="addProject" extends="base-definition">
+		<put-attribute name="title" value="Adding Project" />
+		<put-attribute name="body" value="/WEB-INF/views/pages/addeditproject.jsp" />
+	</definition>
+	
+
+</tiles-definitions>

@@ -27,20 +27,20 @@ public class EmployeeController {
 	public String sayHello(Model model) {
 		List<Employee> employees = employeeDao.findAll();
 		model.addAttribute("employees", employees);
-		return "listemployees";
+		return "allEmployees";
 	}
 	
 	@RequestMapping(value = "/add", method = RequestMethod.GET)
 	public String addEmployee(Model model) {
 		Employee emp = new Employee();
 		model.addAttribute("employee", emp);
-		return "addeditemployee";
+		return "addEmployee";
 	}
 	
 	@RequestMapping(value = "/add", method = RequestMethod.POST)
 	public String addEmployee(@ModelAttribute("employee") @Valid Employee emp, BindingResult result) {
 		if(result.hasErrors())
-			return "addeditemployee";
+			return "addEmployee";
 		else {
 			employeeDao.save(emp);
 			return "redirect:/employee/list";
@@ -57,13 +57,13 @@ public class EmployeeController {
 	public String editEmployee(@PathVariable(value="id")Long id, Model model) {
 		Employee employee = employeeDao.findOne(id);
 		model.addAttribute("employee", employee);
-		return "addeditemployee";
+		return "editEmployee";
 	}
 	
 	@RequestMapping(value = "/edit/{id}", method = RequestMethod.POST)
 	public String editEmployee(@ModelAttribute("employee") @Valid Employee emp, BindingResult result) {
 		if(result.hasErrors())
-			return "addeditemployee";
+			return "editEmployee";
 		else {
 			employeeDao.save(emp);
 			return "redirect:/employee/list";

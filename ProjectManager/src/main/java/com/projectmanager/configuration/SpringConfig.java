@@ -20,9 +20,13 @@ import org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean;
 import org.springframework.orm.jpa.vendor.HibernateJpaVendorAdapter;
 import org.springframework.web.servlet.ViewResolver;
 import org.springframework.web.servlet.config.annotation.EnableWebMvc;
+import org.springframework.web.servlet.config.annotation.ViewResolverRegistry;
 import org.springframework.web.servlet.view.InternalResourceViewResolver;
 import org.springframework.web.servlet.view.JstlView;
-
+import org.springframework.web.servlet.view.UrlBasedViewResolver;
+import org.springframework.web.servlet.view.tiles3.TilesConfigurer;
+import org.springframework.web.servlet.view.tiles3.TilesView;
+import org.springframework.web.servlet.view.tiles3.TilesViewResolver;
 import org.springframework.transaction.annotation.EnableTransactionManagement;
 
 @Configuration
@@ -34,22 +38,36 @@ import org.springframework.transaction.annotation.EnableTransactionManagement;
 public class SpringConfig {
 	@Autowired
 	private Environment env;
-	
+
 	@Bean
 	public static PropertySourcesPlaceholderConfigurer propertySourcesPlaceholderConfigurer() {
 		return new PropertySourcesPlaceholderConfigurer();
 	}
 
+	/**
+	 * Configure TilesConfigurer.
+	 */
 	@Bean
-	public ViewResolver viewResolver() {
-		InternalResourceViewResolver viewResolver = new InternalResourceViewResolver();
-		viewResolver.setViewClass(JstlView.class);
-		viewResolver.setPrefix("/WEB-INF/views/");
-		viewResolver.setSuffix(".jsp");
+	public TilesConfigurer tilesConfigurer() {
+		TilesConfigurer tilesConfigurer = new TilesConfigurer();
+		tilesConfigurer.setDefinitions(new String[] { "/WEB-INF/views/**/tiles.xml" });
+		tilesConfigurer.setCheckRefresh(true);
+		return tilesConfigurer;
+	}
 
+	/**
+	 * Configure ViewResolver
+	 */
+	@Bean
+	public UrlBasedViewResolver viewResolver() {
+		UrlBasedViewResolver viewResolver = new UrlBasedViewResolver();
+		viewResolver.setViewClass(TilesView.class);
 		return viewResolver;
 	}
 
+	/**
+	 * Configure DataSource
+	 */
 	@Bean
 	public DataSource dataSource() {
 		DriverManagerDataSource dataSource = new DriverManagerDataSource();
@@ -60,12 +78,13 @@ public class SpringConfig {
 		return dataSource;
 	}
 
+	/**
+	 * Entity Managaer Factory
+	 */
 	@Bean
 	public LocalContainerEntityManagerFactoryBean entityManagerFactory() {
-
 		HibernateJpaVendorAdapter vendorAdapter = new HibernateJpaVendorAdapter();
 		vendorAdapter.setGenerateDdl(true);
-
 		LocalContainerEntityManagerFactoryBean factory = new LocalContainerEntityManagerFactoryBean();
 		factory.setJpaVendorAdapter(vendorAdapter);
 		factory.setPackagesToScan("com.projectmanager.models");
@@ -74,6 +93,9 @@ public class SpringConfig {
 		return factory;
 	}
 
+	/**
+	 * Transaction manager
+	 */
 	@Bean
 	JpaTransactionManager transactionManager(EntityManagerFactory entityManagerFactory) {
 		JpaTransactionManager transactionManager = new JpaTransactionManager();
@@ -81,11 +103,17 @@ public class SpringConfig {
 		return transactionManager;
 	}
 
+	/**
+	 * Exception translation
+	 */
 	@Bean
 	public PersistenceExceptionTranslationPostProcessor exceptionTranslation() {
 		return new PersistenceExceptionTranslationPostProcessor();
 	}
 
+	/**
+	 * Additional JpaProperties
+	 */
 	Properties additionalProperties() {
 		Properties properties = new Properties();
 		properties.setProperty("hibernate.hbm2ddl.auto", "update");

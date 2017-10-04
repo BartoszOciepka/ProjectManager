@@ -1,5 +1,7 @@
 package com.projectmanager.controllers;
 
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 import javax.validation.Valid;
@@ -21,25 +23,31 @@ public class ProjectController {
 
 	@Autowired
 	ProjectDao projectDao;
+	
+	List<String> scaleOptions = new ArrayList<>(Arrays.asList("miesiac", "pol roku", "rok"));
+	
 
 	@RequestMapping(value = "/list", method = RequestMethod.GET)
 	public String sayHello(Model model) {
 		List<Project> projects = projectDao.findAll();
 		model.addAttribute("projects", projects);
-		return "listprojects";
+		return "allProjects";
 	}
 	
 	@RequestMapping(value = "/add", method = RequestMethod.GET)
 	public String addProject(Model model) {
 		Project project = new Project();
 		model.addAttribute("project", project);
-		return "addeditproject";
+		model.addAttribute("scaleOptions", scaleOptions);
+		return "addProject";
 	}
 	
 	@RequestMapping(value = "/add", method = RequestMethod.POST)
-	public String addProject(@ModelAttribute("project") @Valid Project project, BindingResult result) {
-		if(result.hasErrors())
-			return "addeditproject";
+	public String addProject(@ModelAttribute("project") @Valid Project project, BindingResult result, Model model) {
+		if(result.hasErrors()) {
+			model.addAttribute("scaleOptions", scaleOptions);
+			return "addProject";
+		}
 		else {
 			projectDao.save(project);
 			return "redirect:/project/list";
@@ -56,13 +64,16 @@ public class ProjectController {
 	public String editProject(@PathVariable(value="id")Long id, Model model) {
 		Project project = projectDao.findOne(id);
 		model.addAttribute("project", project);
-		return "addeditproject";
+		model.addAttribute("scaleOptions", scaleOptions);
+		return "editProject";
 	}
 	
 	@RequestMapping(value = "/edit/{id}", method = RequestMethod.POST)
-	public String editProject(@ModelAttribute("project") @Valid Project project, BindingResult result) {
-		if(result.hasErrors())
-			return "addeditproject";
+	public String editProject(@ModelAttribute("project") @Valid Project project, BindingResult result, Model model) {
+		if(result.hasErrors()) {
+			model.addAttribute("scaleOptions", scaleOptions);
+			return "editProject";
+		}
 		else {
 			projectDao.save(project);
 			return "redirect:/project/list";

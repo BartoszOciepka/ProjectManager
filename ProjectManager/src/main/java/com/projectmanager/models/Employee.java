@@ -47,4 +47,8 @@ public class Employee {
 	public void setLastName(String lastName) {
 		this.lastName = lastName;
 	}
+	
+	public String toString() {
+		return firstName + " " + lastName;
+	}
 }

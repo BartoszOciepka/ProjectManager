@@ -5,24 +5,23 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.validation.constraints.NotBlank;
-import javax.validation.constraints.NotEmpty;
-import javax.validation.constraints.NotNull;
 
 import org.springframework.stereotype.Component;
 
 @Component
 @Entity
-public class Employee {
-
+public class Project {
 	@Id
 	@GeneratedValue
 	Long id;
 	@NotBlank
 	@Column
-	String firstName;
+	String name;
+	@Column
+	String date;
 	@NotBlank
 	@Column
-	String lastName;
+	String scale;
 
 	public Long getId() {
 		return id;
@@ -32,19 +31,31 @@ public class Employee {
 		this.id = id;
 	}
 
-	public String getFirstName() {
-		return firstName;
+	public String getName() {
+		return name;
 	}
 
-	public void setFirstName(String firstName) {
-		this.firstName = firstName;
+	public void setName(String name) {
+		this.name = name;
 	}
 
-	public String getLastName() {
-		return lastName;
+	public String getDate() {
+		return date;
 	}
 
-	public void setLastName(String lastName) {
-		this.lastName = lastName;
+	public void setDate(String date) {
+		this.date = date;
+	}
+
+	public String getScale() {
+		return scale;
+	}
+
+	public void setScale(String scale) {
+		this.scale = scale;
+	}
+
+	public String toString() {
+		return name + " " + date + " " + scale;
 	}
 }

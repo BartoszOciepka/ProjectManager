@@ -52,5 +52,23 @@
 		<put-attribute name="body" value="/WEB-INF/views/pages/addeditproject.jsp" />
 	</definition>
 	
+				<!-- List Scale Page -->
+	<definition name="listScales" extends="base-definition">
+		<put-attribute name="title" value="All scales" />
+		<put-attribute name="body" value="/WEB-INF/views/pages/listscales.jsp" />
+	</definition>
+	
+					<!-- Add Scale Page -->
+	<definition name="addScale" extends="base-definition">
+		<put-attribute name="title" value="Add scale" />
+		<put-attribute name="body" value="/WEB-INF/views/pages/addeditscale.jsp" />
+	</definition>
+	
+					<!-- Edit Scale Page -->
+	<definition name="editScale" extends="base-definition">
+		<put-attribute name="title" value="Edit scale" />
+		<put-attribute name="body" value="/WEB-INF/views/pages/addeditscale.jsp" />
+	</definition>
+	
 
 </tiles-definitions>

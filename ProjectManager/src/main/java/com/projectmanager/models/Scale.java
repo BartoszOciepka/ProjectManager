@@ -7,53 +7,25 @@ import javax.persistence.Id;
 import javax.validation.constraints.NotBlank;
 
 @Entity
-public class Project {
+public class Scale {
+
 	@Id
 	@GeneratedValue
-	Long id;
-	@NotBlank
+	public Long id;
 	@Column
-	String name;
 	@NotBlank
-	@Column
-	String date;
-	@NotBlank
-	@Column
-	String scale;
-
+	public String scale;
+	
 	public Long getId() {
 		return id;
 	}
-
 	public void setId(Long id) {
 		this.id = id;
 	}
-
-	public String getName() {
-		return name;
-	}
-
-	public void setName(String name) {
-		this.name = name;
-	}
-
-	public String getDate() {
-		return date;
-	}
-
-	public void setDate(String date) {
-		this.date = date;
-	}
-
 	public String getScale() {
 		return scale;
 	}
-
 	public void setScale(String scale) {
 		this.scale = scale;
-	}
-
-	public String toString() {
-		return name + " " + date + " " + scale;
 	}
 }

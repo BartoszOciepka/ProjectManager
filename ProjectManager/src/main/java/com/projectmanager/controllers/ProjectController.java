@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import com.projectmanager.models.Project;
 import com.projectmanager.models.ProjectDao;
+import com.projectmanager.models.ScaleDao;
 
 @Controller
 @RequestMapping("/project")
@@ -24,8 +25,8 @@ public class ProjectController {
 	@Autowired
 	ProjectDao projectDao;
 	
-	List<String> scaleOptions = new ArrayList<>(Arrays.asList("miesiac", "pol roku", "rok"));
-	
+	@Autowired
+	ScaleDao scaleDao;	
 
 	@RequestMapping(value = "/list", method = RequestMethod.GET)
 	public String sayHello(Model model) {
@@ -38,14 +39,14 @@ public class ProjectController {
 	public String addProject(Model model) {
 		Project project = new Project();
 		model.addAttribute("project", project);
-		model.addAttribute("scaleOptions", scaleOptions);
+		model.addAttribute("scaleOptions", scaleDao.findAll());
 		return "addProject";
 	}
 	
 	@RequestMapping(value = "/add", method = RequestMethod.POST)
 	public String addProject(@ModelAttribute("project") @Valid Project project, BindingResult result, Model model) {
 		if(result.hasErrors()) {
-			model.addAttribute("scaleOptions", scaleOptions);
+			model.addAttribute("scaleOptions", scaleDao.findAll());
 			return "addProject";
 		}
 		else {
@@ -64,14 +65,14 @@ public class ProjectController {
 	public String editProject(@PathVariable(value="id")Long id, Model model) {
 		Project project = projectDao.findOne(id);
 		model.addAttribute("project", project);
-		model.addAttribute("scaleOptions", scaleOptions);
+		model.addAttribute("scaleOptions", scaleDao.findAll());
 		return "editProject";
 	}
 	
 	@RequestMapping(value = "/edit/{id}", method = RequestMethod.POST)
 	public String editProject(@ModelAttribute("project") @Valid Project project, BindingResult result, Model model) {
 		if(result.hasErrors()) {
-			model.addAttribute("scaleOptions", scaleOptions);
+			model.addAttribute("scaleOptions", scaleDao.findAll());
 			return "editProject";
 		}
 		else {

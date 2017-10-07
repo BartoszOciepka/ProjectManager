@@ -1,10 +1,10 @@
-package com.projectmanager.configuration;
+package configuration;
 
 import java.util.Properties;
 
 import javax.persistence.EntityManagerFactory;
 import javax.sql.DataSource;
-
+import models.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
@@ -14,30 +14,35 @@ import org.springframework.context.support.PropertySourcesPlaceholderConfigurer;
 import org.springframework.core.env.Environment;
 import org.springframework.dao.annotation.PersistenceExceptionTranslationPostProcessor;
 import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
+import org.springframework.format.FormatterRegistry;
 import org.springframework.jdbc.datasource.DriverManagerDataSource;
 import org.springframework.orm.jpa.JpaTransactionManager;
 import org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean;
 import org.springframework.orm.jpa.vendor.HibernateJpaVendorAdapter;
-import org.springframework.web.servlet.ViewResolver;
 import org.springframework.web.servlet.config.annotation.EnableWebMvc;
-import org.springframework.web.servlet.config.annotation.ViewResolverRegistry;
-import org.springframework.web.servlet.view.InternalResourceViewResolver;
-import org.springframework.web.servlet.view.JstlView;
+import org.springframework.web.servlet.config.annotation.WebMvcConfigurerAdapter;
 import org.springframework.web.servlet.view.UrlBasedViewResolver;
 import org.springframework.web.servlet.view.tiles3.TilesConfigurer;
 import org.springframework.web.servlet.view.tiles3.TilesView;
-import org.springframework.web.servlet.view.tiles3.TilesViewResolver;
 import org.springframework.transaction.annotation.EnableTransactionManagement;
 
 @Configuration
+@SuppressWarnings("deprecation")
 @EnableWebMvc
-@EnableJpaRepositories(basePackages = "com.projectmanager.models")
+@EnableJpaRepositories(basePackages = "models")
 @EnableTransactionManagement
-@ComponentScan("com.projectmanager.controllers")
+@ComponentScan("controllers")
+@ComponentScan("models")
 @PropertySource("classpath:application.properties")
-public class SpringConfig {
+public class SpringConfig extends WebMvcConfigurerAdapter{
 	@Autowired
 	private Environment env;
+	
+	@Autowired
+	ScaleIdToScaleConverter scaleIdToScaleConverter;
+	
+	@Autowired
+	EmployeeIdToEmployeeConverter employeeIdToEmployeeConverter;
 
 	@Bean
 	public static PropertySourcesPlaceholderConfigurer propertySourcesPlaceholderConfigurer() {
@@ -79,7 +84,7 @@ public class SpringConfig {
 	}
 
 	/**
-	 * Entity Managaer Factory
+	 * Entity Manager Factory
 	 */
 	@Bean
 	public LocalContainerEntityManagerFactoryBean entityManagerFactory() {
@@ -87,7 +92,7 @@ public class SpringConfig {
 		vendorAdapter.setGenerateDdl(true);
 		LocalContainerEntityManagerFactoryBean factory = new LocalContainerEntityManagerFactoryBean();
 		factory.setJpaVendorAdapter(vendorAdapter);
-		factory.setPackagesToScan("com.projectmanager.models");
+		factory.setPackagesToScan("models");
 		factory.setDataSource(dataSource());
 		factory.setJpaProperties(additionalProperties());
 		return factory;
@@ -118,6 +123,15 @@ public class SpringConfig {
 		Properties properties = new Properties();
 		properties.setProperty("hibernate.hbm2ddl.auto", "update");
 		properties.setProperty("hibernate.dialect", "org.hibernate.dialect.PostgreSQLDialect");
+		properties.setProperty("hibernate.enable_lazy_load_no_trans", "true");
 		return properties;
+	}
+
+	/**
+	 * Configure Converters to be used.
+	 */
+	public void addFormatters(FormatterRegistry registry) {
+		registry.addConverter(scaleIdToScaleConverter);
+		registry.addConverter(employeeIdToEmployeeConverter);
 	}
 }

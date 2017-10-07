@@ -1,4 +1,4 @@
-package com.projectmanager.models;
+package models;
 
 import java.util.List;
 

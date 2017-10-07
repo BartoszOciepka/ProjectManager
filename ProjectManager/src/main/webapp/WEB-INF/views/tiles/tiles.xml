@@ -3,72 +3,61 @@
 
 <tiles-definitions>
 
-	<!-- Base Definition -->
-	<definition name="base-definition"
-		template="/WEB-INF/views/tiles/layouts/defaultLayout.jsp">
+	<definition name="base-definition" template="/WEB-INF/views/tiles/layouts/projectManagerLayout.jsp">
 		<put-attribute name="title" value="" />
-		<put-attribute name="header"
-			value="/WEB-INF/views/tiles/template/defaultHeader.jsp" />
-		<put-attribute name="menu"
-			value="/WEB-INF/views/tiles/template/defaultMenu.jsp" />
+		<put-attribute name="menu" value="/WEB-INF/views/tiles/template/projectManagerMenu.jsp" />
 		<put-attribute name="body" value="" />
-		<put-attribute name="footer"
-			value="/WEB-INF/views/tiles/template/defaultFooter.jsp" />
 	</definition>
 
+	<!-- Employee Model -->
 	<!-- All Employees Page -->
 	<definition name="allEmployees" extends="base-definition">
 		<put-attribute name="title" value="All employees" />
 		<put-attribute name="body" value="/WEB-INF/views/pages/listemployees.jsp" />
 	</definition>
+	<!-- Edit Employee Page -->
+	<definition name="editEmployee" extends="base-definition">
+		<put-attribute name="title" value="Edit employee" />
+		<put-attribute name="body" value="/WEB-INF/views/pages/addeditemployee.jsp" />
+	</definition>
+	<!-- Add Employee Page -->
+	<definition name="addEmployee" extends="base-definition">
+		<put-attribute name="title" value="Add employee" />
+		<put-attribute name="body" value="/WEB-INF/views/pages/addeditemployee.jsp" />
+	</definition>
 
+	<!-- Project Model -->
 	<!-- All Projects Page -->
 	<definition name="allProjects" extends="base-definition">
 		<put-attribute name="title" value="All projects" />
 		<put-attribute name="body" value="/WEB-INF/views/pages/listprojects.jsp" />
 	</definition>
-
-	<!-- Edit Employee Page -->
-	<definition name="editEmployee" extends="base-definition">
-		<put-attribute name="title" value="Editing employee" />
-		<put-attribute name="body" value="/WEB-INF/views/pages/addeditemployee.jsp" />
-	</definition>
-	
-		<!-- Add Employee Page -->
-	<definition name="addEmployee" extends="base-definition">
-		<put-attribute name="title" value="Adding employee" />
-		<put-attribute name="body" value="/WEB-INF/views/pages/addeditemployee.jsp" />
-	</definition>
-	
-		<!-- Edit Project Page -->
+	<!-- Edit Project Page -->
 	<definition name="editProject" extends="base-definition">
-		<put-attribute name="title" value="Editing Project" />
+		<put-attribute name="title" value="Edit Project" />
 		<put-attribute name="body" value="/WEB-INF/views/pages/addeditproject.jsp" />
 	</definition>
 	
-			<!-- Add Project Page -->
+	<!-- Add Project Page -->
 	<definition name="addProject" extends="base-definition">
-		<put-attribute name="title" value="Adding Project" />
+		<put-attribute name="title" value="Add Project" />
 		<put-attribute name="body" value="/WEB-INF/views/pages/addeditproject.jsp" />
 	</definition>
 	
-				<!-- List Scale Page -->
+	<!-- Scale model -->
+	<!-- All Scales Page -->
 	<definition name="listScales" extends="base-definition">
 		<put-attribute name="title" value="All scales" />
 		<put-attribute name="body" value="/WEB-INF/views/pages/listscales.jsp" />
 	</definition>
-	
-					<!-- Add Scale Page -->
+	<!-- Add Scale Page -->
 	<definition name="addScale" extends="base-definition">
 		<put-attribute name="title" value="Add scale" />
 		<put-attribute name="body" value="/WEB-INF/views/pages/addeditscale.jsp" />
 	</definition>
-	
-					<!-- Edit Scale Page -->
+	<!-- Edit Scale Page -->
 	<definition name="editScale" extends="base-definition">
 		<put-attribute name="title" value="Edit scale" />
 		<put-attribute name="body" value="/WEB-INF/views/pages/addeditscale.jsp" />
 	</definition>
-	
-
 </tiles-definitions>

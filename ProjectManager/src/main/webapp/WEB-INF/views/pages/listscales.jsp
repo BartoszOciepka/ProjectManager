@@ -1,7 +1,6 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 
-<table id="example" class="table table-striped table-bordered"
-	cellspacing="0" width="100%">
+<table id="scales" class="table table-striped table-bordered">
 	<thead>
 		<tr>
 			<th>Scale</th>
@@ -12,7 +11,7 @@
 	<tbody>
 		<c:forEach var="scale" items="${scales}">
 			<tr>
-				<td>${scale.scale}</td>
+				<td>${scale.name}</td>
 				<td><a href="edit/${scale.getId()}">Edit</a></td>
 				<td><a href="delete/${scale.getId()}">Delete</a></td>
 			</tr>
@@ -22,12 +21,12 @@
 
 <script>
 	$(document).ready(function() {
-		$('#example').DataTable( {
+		$('#"scales"').DataTable( {
 			"pagingType": "full_numbers",
 			"columnDefs": [
 				{"orderable":false, "targets": 1, "bSortable":false},
 				{"orderable":false, "targets": 2, "bSortable":false}
-				]});
-		
+			]
+		});
 	});
 </script>

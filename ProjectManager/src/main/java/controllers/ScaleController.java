@@ -1,4 +1,4 @@
-package com.projectmanager.controllers;
+package controllers;
 
 import java.util.List;
 
@@ -12,8 +12,8 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
-import com.projectmanager.models.Scale;
-import com.projectmanager.models.ScaleDao;
+import models.Scale;
+import models.ScaleDao;
 
 @Controller
 @RequestMapping("/scale")
@@ -24,23 +24,19 @@ public class ScaleController {
 
 	@RequestMapping(value = "/list", method = RequestMethod.GET)
 	public String listScales(Model model) {
-		List<Scale> scales = scaleDao.findAll();
-		model.addAttribute("scales", scales);
+		model.addAttribute("scales", scaleDao.findAll());
 		return "listScales";
 	}
 	
 	@RequestMapping(value = "/add", method = RequestMethod.GET)
 	public String addScale(Model model) {
-		Scale scale = new Scale();
-		model.addAttribute("scale", scale);
+		model.addAttribute("scale", new Scale());
 		return "addScale";
 	}
 	
 	@RequestMapping(value = "/add", method = RequestMethod.POST)
-	public String addScale(@ModelAttribute("scale") @Valid Scale scale, BindingResult result, Model model) {
-		if(result.hasErrors()) {
-			return "addScale";
-		}
+	public String addScale(@ModelAttribute("scale") @Valid Scale scale, BindingResult result) {
+		if(result.hasErrors()) return "addScale";
 		else {
 			scaleDao.save(scale);
 			return "redirect:/scale/list";
@@ -55,16 +51,13 @@ public class ScaleController {
 	
 	@RequestMapping(value = "/edit/{id}", method = RequestMethod.GET)
 	public String editScale(@PathVariable(value="id")Long id, Model model) {
-		Scale scale = scaleDao.findOne(id);
-		model.addAttribute("scale", scale);
+		model.addAttribute("scale", scaleDao.findOne(id));
 		return "editScale";
 	}
 	
 	@RequestMapping(value = "/edit/{id}", method = RequestMethod.POST)
-	public String scaleProject(@ModelAttribute("scale") @Valid Scale scale, BindingResult result, Model model) {
-		if(result.hasErrors()) {
-			return "editScale";
-		}
+	public String editScale(@ModelAttribute("scale") @Valid Scale scale, BindingResult result) {
+		if(result.hasErrors()) return "editScale";
 		else {
 			scaleDao.save(scale);
 			return "redirect:/scale/list";

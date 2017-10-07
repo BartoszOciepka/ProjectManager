@@ -1,4 +1,4 @@
-package com.projectmanager.configuration;
+package configuration;
 
 import javax.servlet.ServletContext;
 import javax.servlet.ServletException;
